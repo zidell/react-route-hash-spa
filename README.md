@@ -1,6 +1,8 @@
+
 # react-route-hash-spa
 
-Simple route with hash system for SPA
+모바일에서의 뒤로가기와 완벽히 연동되는, 해시기반의 라우팅 방식. 앱과 같이 계층적 뷰 구조를 만들 수 있다. 동적인 뷰 생성으로 반복 사용이 용이하다.
+
 dependencies : mobx, typescript, styled-components
 
 ## Usage
@@ -51,7 +53,7 @@ class App extends React.Component {
 - `window.route.pop(segment)` : 뒤로가기, back 버튼과 동일
 - `window.parent(num)` : 자연수면 num 단계로 상위 이동, -num이면 현재 기준 상위로 num 단계까지 이동
 
-segment는 dash-case로 작성되는 것을 기준으로 하였으며, 파라미터는 `.`으로 구분하면 됨. `thread.182.ho`은 `<Thread params=[182, 'ho]/>`와 동일
+segment는 dash-case로 작성되는 것을 기준으로 하였으며, 파라미터는 `.`으로 구분하면 됨. `thread.182.ho`은 `<Thread params=[182, 'ho']/>`와 동일
 
 ## Styling
 
