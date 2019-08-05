@@ -7,7 +7,8 @@ dependencies : mobx, typescript, styled-components
 
 ## Usage
 
-In your store,
+### store
+
 ```js
 import { RouteCtrl } from './sub_modules/react-route-hash-spa/src/route';
 ...
@@ -18,9 +19,9 @@ public route: RouteCtrl = new RouteCtrl({
   
 ```
 
-## App.tsx
+### app.tsx
 ```js
-import Route from './sub_modules/react-route-hash-spa/src/route';
+import Routes from './sub_modules/react-route-hash-spa/src/route';
 
 // comoponents foro route
 const routeComponents = {
@@ -53,6 +54,20 @@ class App extends React.Component {
 - `window.parent(num)` : 자연수면 num 단계로 상위 이동, -num이면 현재 기준 상위로 num 단계까지 이동
 
 segment는 dash-case로 작성되는 것을 기준으로 하였으며, 파라미터는 `.`으로 구분하면 됨. `thread.182.ho`은 `<Thread params=[182, 'ho']/>`와 동일
+
+## Modal
+
+`Modal`을 랩핑한 컴모넌트를 만들고, 라우트에 이으면 모달이다
+
+```js
+import { Modal } from './sub_modules/react-route-hash-spa/src/route';
+...
+const ModalRoute = () => (
+  <Modal>
+    나는 모달에서 뜨는 내용이다
+  </Modal>
+);
+```
 
 ## Styling
 
