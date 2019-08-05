@@ -21,23 +21,22 @@ public route: RouteCtrl = new RouteCtrl({
 ## App.tsx
 ```js
 import Route from './sub_modules/react-route-hash-spa/src/route';
-/**
- * import for route
- */
-import BbsThread from './bbs-thread';
-import BbsList from './bbs-list';
+
+// comoponents foro route
 const routeComponents = {
-	'bbs-list': BbsList,
-	'bbs-thread': BbsThread,
+	preview: Preview,
+	template: Template,
 };
+
 ...
 class App extends React.Component {
   ...
   render() {
+    const { route: {segments} } = this.injected;
     return (
       <div>
         ...
-        {route.segments.map(({ component, params }, index) => <Route key={index} comp={routeComponents[component]} params={params} />)}
+        <Routes components={routeComponents} segments={segments} />
       </div>
     );
   }
