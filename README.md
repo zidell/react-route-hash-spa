@@ -51,7 +51,7 @@ class App extends React.Component {
 - `window.route.push(segment)` : 강제로 하위 뷰 생성
 - `window.route.replace(segment)` : 강제로 현재 뷰 대체
 - `window.route.pop(segment)` : 뒤로가기, back 버튼과 동일
-- `window.parent(num)` : 자연수면 num 단계로 상위 이동, -num이면 현재 기준 상위로 num 단계까지 이동
+- `window.route.parent(num)` : 자연수면 num 단계로 상위 이동, -num이면 현재 기준 상위로 num 단계까지 이동
 
 segment는 dash-case로 작성되는 것을 기준으로 하였으며, 파라미터는 `.`으로 구분하면 됨. `thread.182.ho`은 `<Thread params=[182, 'ho']/>`와 동일
 
