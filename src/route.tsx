@@ -6,7 +6,7 @@ import styled from 'styled-components';
 interface IOptions {
 	resetOnStartUp?: boolean;
 }
-interface ISegment {
+export interface ISegment {
 	component: string;
 	params: string[];
 }
@@ -25,7 +25,7 @@ class RouteCtrl {
 	}
 
 	private getRefinePath = (): string => {
-		return location.hash.replace(/^#!/, '').replace(/\/$/, '');
+		return location.hash.replace(/^#!\/?/, '').replace(/\/$/, '');
 	}
 
 	public parent = (num: number): void => {
@@ -143,11 +143,11 @@ const StyledRoute = styled.div`
 	display: flex;
 	flex-direction: column;
 `;
-interface IProps {
+interface IRouteProps {
 	comp: React.ReactNode;
-	params: string[];
+	params?: string[];
 }
-const Route: React.FC<IProps> = (props) => {
+const Route: React.FC<IRouteProps> = (props) => {
 	const Comp: any = props.comp;
 	return (
 		<StyledRoute
@@ -158,7 +158,22 @@ const Route: React.FC<IProps> = (props) => {
 	);
 };
 
-export default Route;
+export { Route };
+
+
+
+interface IRoutesProps {
+	components: any;
+	segments: ISegment[];
+}
+const Routes: React.FC<IRoutesProps> = ({ components, segments }) => (
+	<React.Fragment>
+		{segments.map(({ component, params }, index: number) => <Route key={index} comp={components[component]} params={params} />)}
+	</React.Fragment>
+);
+export default Routes;
+
+
 
 /**	
  * Modal
