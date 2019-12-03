@@ -1,4 +1,3 @@
-import { inject, observer } from 'mobx-react';
 import * as React from 'react';
 import { observable, action, toJS } from 'mobx';
 import styled from 'styled-components';
@@ -26,23 +25,27 @@ class RouteCtrl {
 
 	private getRefinePath = (): string => {
 		return location.hash.replace(/^#!\/?/, '').replace(/\/$/, '');
-	}
+	};
 
 	public parent = (num: number): void => {
 		const { getRefinePath } = this;
 		const segments = getRefinePath().split('/');
-		if (num < 0) { // 상대증감
+		if (num < 0) {
+			// 상대증감
 			history.go(num);
-		} else { // 즐대증감
+		} else {
+			// 즐대증감
 			const targetGo = num - (segments.length - 1);
 			history.go(targetGo);
 		}
-	}
+	};
 
 	// 마지막 뷰가 같은 컴포넌트면 대체, 아니면 하위로 push
 	public move = (segment, withHistory: boolean = false): void => {
 		const { getRefinePath } = this;
-		const lastSegment = getRefinePath().split('/').pop();
+		const lastSegment = getRefinePath()
+			.split('/')
+			.pop();
 		if (segment.charAt(0) === '/') {
 			// go to the root
 			this.parent(0); // reset history to root
@@ -54,11 +57,11 @@ class RouteCtrl {
 				this.push(segment);
 			}
 		}
-	}
+	};
 
 	public moveWithHistory = (segment): void => {
 		this.move(segment, true);
-	}
+	};
 
 	public push(segment: string): void {
 		let targetStr = location.hash;
@@ -96,28 +99,34 @@ class RouteCtrl {
 		this.reset();
 		if (!this.resetOnStartUp) {
 			// 하나씩 돌면서 push해주기
-			previousHash.split('/').filter(r => r !== '').forEach(segment => {
-				this.push(segment);
-			});
+			previousHash
+				.split('/')
+				.filter(r => r !== '')
+				.forEach(segment => {
+					this.push(segment);
+				});
 		}
-	}
+	};
 
 	private parsingSegments = (): void => {
 		const { getRefinePath } = this;
 		const refinedPath = getRefinePath();
 
 		const newSegments: ISegment[] = [];
-		refinedPath.split('/').filter(r => r !== '').forEach(segment => {
-			const tmp = segment.split('.');
-			const component = tmp.shift();
-			const params = tmp.slice();
-			newSegments.push({
-				component,
-				params
+		refinedPath
+			.split('/')
+			.filter(r => r !== '')
+			.forEach(segment => {
+				const tmp = segment.split('.');
+				const component = tmp.shift();
+				const params = tmp.slice();
+				newSegments.push({
+					component,
+					params,
+				});
 			});
-		});
 		this.segments = newSegments;
-	}
+	};
 
 	private bindEvent = () => {
 		const { restorePrevious, parsingSegments } = this;
@@ -147,12 +156,10 @@ interface IRouteProps {
 	comp: React.ReactNode;
 	params?: string[];
 }
-const Route: React.FC<IRouteProps> = (props) => {
+const Route: React.FC<IRouteProps> = props => {
 	const Comp: any = props.comp;
 	return (
-		<StyledRoute
-			className="route-view"
-		>
+		<StyledRoute className="route-view">
 			<Comp params={props.params} />
 		</StyledRoute>
 	);
@@ -160,22 +167,20 @@ const Route: React.FC<IRouteProps> = (props) => {
 
 export { Route };
 
-
-
 interface IRoutesProps {
 	components: any;
 	segments: ISegment[];
 }
 const Routes: React.FC<IRoutesProps> = ({ components, segments }) => (
 	<React.Fragment>
-		{segments.map(({ component, params }, index: number) => <Route key={index} comp={components[component]} params={params} />)}
+		{segments.map(({ component, params }, index: number) => (
+			<Route key={index} comp={components[component]} params={params} />
+		))}
 	</React.Fragment>
 );
 export default Routes;
 
-
-
-/**	
+/**
  * Modal
  */
 const StyledModal = styled.div`
@@ -230,17 +235,12 @@ const StyledModal = styled.div`
 const Modal: React.FC<any> = ({ children, ...others }) => {
 	const closeModal = () => {
 		window['route'].pop();
-	}
+	};
 	return (
-		<StyledModal
-			className="route-modal"
-			{...others}
-		>
+		<StyledModal className="route-modal" {...others}>
 			<div className="modal-overlay" />
 			<div className="modal-inner">
-				<div className="modal-inner-padding">
-					{children}
-				</div>
+				<div className="modal-inner-padding">{children}</div>
 			</div>
 		</StyledModal>
 	);
